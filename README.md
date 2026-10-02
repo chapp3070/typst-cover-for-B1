@@ -125,6 +125,7 @@ iwr https://raw.githubusercontent.com/chapp3070/typst-cover-for-B1/main/scripts/
 
 ## ディレクトリ構成
 
+* `typst.toml`: パッケージ定義マニフェスト（パッケージ名・バージョン・エントリポイント指定）
 * `lib.typ`: エントリポイント・統合モジュール
 * `covers/basic_engineering.typ`: 工学基礎実験表紙のレイアウト定義
 * `covers/programming_practice.typ`: プログラミング演習表紙のレイアウト定義
