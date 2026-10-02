@@ -38,7 +38,7 @@
   author: "",
 
   // フォント設定
-  font: ("IPAexGothic", "Harano Aji Gothic", "Yu Gothic", "Meiryo", "MS Gothic", "Hiragino Kaku Gothic ProN"),
+  font: ("Yu Gothic", "Meiryo", "MS Gothic", "BIZ UDPGothic", "Noto Sans CJK JP", "IPAexGothic"),
   
   body,
 ) = {

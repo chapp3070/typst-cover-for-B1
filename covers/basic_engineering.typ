@@ -23,17 +23,17 @@
   student-id: "",
   author: "",
   eval-instruction: "",
-  font: ("IPAexGothic", "Harano Aji Gothic", "Yu Gothic", "Meiryo", "MS Gothic", "Hiragino Kaku Gothic ProN"),
+  font: ("Yu Gothic", "Meiryo", "MS Gothic", "BIZ UDPGothic", "Noto Sans CJK JP", "IPAexGothic"),
 ) = {
   set text(font: font, lang: "ja")
   
   // タイトル部
   align(center)[
-    #v(0.5cm)
-    #text(size: 18pt, weight: "bold")[#department]
     #v(0.6cm)
-    #text(size: 22pt, weight: "bold")[#report-title]
-    #v(1.2cm)
+    #text(size: 20pt, weight: "bold")[#department]
+    #v(0.8cm)
+    #text(size: 24pt, weight: "bold")[#report-title]
+    #v(1.4cm)
   ]
 
   // 表用の共通スタイル
@@ -69,24 +69,24 @@
 
   // メイングリッド表
   table(
-    columns: (0.9cm, 3.4cm, 3.4cm, 1fr),
+    columns: (1.1cm, 3.5cm, 3.5cm, 1fr),
     rows: (
-      1.8em, // 1: 実験演習記録
-      1.8em, // 2: 年月日時 / 共同作業者
-      1.8em, // 3: 実験1
-      1.8em, // 4: 実験2
-      1.8em, // 5: 実験3
-      1.8em, // 6: 実験4
-      1.8em, // 7: レポート提出記録
-      1.8em, // 8: 提出年月日 / 期限年月日
-      1.8em, // 9: 初
-      1.8em, // 10: 再
-      1.8em, // 11: 再2
-      1.8em, // 12: 再3
-      1.8em, // 13: クラス / 班番号 / テーマ ヘッダー
-      2.4em, // 14: クラス / 班番号 / テーマ 内容
-      1.8em, // 15: 指導教員 / 学籍番号 / 氏名 ヘッダー
-      2.4em  // 16: 指導教員 / 学籍番号 / 氏名 内容
+      2.0em, // 1: 実験演習記録
+      2.0em, // 2: 年月日時 / 共同作業者
+      2.0em, // 3: 実験1
+      2.0em, // 4: 実験2
+      2.0em, // 5: 実験3
+      2.0em, // 6: 実験4
+      2.0em, // 7: レポート提出記録
+      2.0em, // 8: 提出年月日 / 期限年月日
+      2.0em, // 9: 初
+      2.0em, // 10: 再
+      2.0em, // 11: 再2
+      2.0em, // 12: 再3
+      2.0em, // 13: クラス / 班番号 / テーマ ヘッダー
+      2.8em, // 14: クラス / 班番号 / テーマ 内容
+      2.0em, // 15: 指導教員 / 学籍番号 / 氏名 ヘッダー
+      2.8em  // 16: 指導教員 / 学籍番号 / 氏名 内容
     ),
     align: (col, row) => center + horizon,
     stroke: 0.7pt + black,
@@ -94,9 +94,9 @@
     // Row 1-6 & Right Panel: 判定・指示
     table.cell(colspan: 3, align: center + horizon)[#text(weight: "bold", size: 11pt)[実験演習記録]],
     table.cell(rowspan: 12, align: center + top)[
-      #v(0.5em)
+      #v(0.6em)
       #text(weight: "bold", size: 11pt)[判定・指示]
-      #v(0.5em)
+      #v(0.6em)
       #align(left)[#text(size: 10pt)[#eval-instruction]]
     ],
 
@@ -107,7 +107,7 @@
 
     // Rows 3-6: 実験記録
     ..exp-list.slice(0, 4).enumerate().map(((idx, item)) => (
-      body-cell(if item.at("num", default: "") != "" { item.num } else { str(idx + 1) }),
+      body-cell(item.at("num", default: "")),
       body-cell(item.at("date", default: "")),
       body-cell(item.at("collaborator", default: "")),
     )).flatten(),
@@ -127,17 +127,17 @@
       body-cell(item.at("deadline", default: "")),
     )).flatten(),
 
-    // Row 13: 下部ヘッダー 1
-    header-cell([クラス]),
+    // Row 13: 下部ヘッダー 1 (クラスは Col1+Col2 に配置)
+    table.cell(colspan: 2, align: center + horizon)[#text(weight: "bold", size: 10.5pt)[クラス]],
     header-cell([班番号]),
-    table.cell(colspan: 2, align: center + horizon)[#text(weight: "bold", size: 10.5pt)[テーマ]],
+    header-cell([テーマ]),
 
     // Row 14: 下部内容 1
-    body-cell(class-name),
+    table.cell(colspan: 2, align: center + horizon)[#text(size: 11pt)[#class-name]],
     body-cell(str(group-number)),
-    table.cell(colspan: 2, align: center + horizon)[#text(size: 11pt)[#theme]],
+    body-cell(theme),
 
-    // Row 15: 下部ヘッダー 2
+    // Row 15: 下部ヘッダー 2 (指導教員は Col1+Col2 に配置)
     table.cell(colspan: 2, align: center + horizon)[#text(weight: "bold", size: 10.5pt)[レポート指導教員]],
     header-cell([学籍番号]),
     header-cell([氏 名]),

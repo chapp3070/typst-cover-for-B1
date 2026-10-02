@@ -10,17 +10,17 @@
   teacher: "",
   student-id: "",
   author: "",
-  font: ("IPAexGothic", "Harano Aji Gothic", "Yu Gothic", "Meiryo", "MS Gothic", "Hiragino Kaku Gothic ProN"),
+  font: ("Yu Gothic", "Meiryo", "MS Gothic", "BIZ UDPGothic", "Noto Sans CJK JP", "IPAexGothic"),
 ) = {
   set text(font: font, lang: "ja")
 
   // 上部タイトルセクション
   align(center)[
-    #v(3cm)
+    #v(3.5cm)
     #text(size: 20pt, weight: "bold")[#department]
-    #v(1.5cm)
+    #v(1.6cm)
     #text(size: 24pt, weight: "bold")[#subject]
-    #v(1.2cm)
+    #v(1.4cm)
     #text(size: 20pt, weight: "bold")[#document-type]
   ]
 
@@ -39,7 +39,7 @@
 
   align(center, table(
     columns: (1fr, 1.5fr, 1.5fr),
-    rows: (2.2em, 2.8em, 2.2em, 2.8em),
+    rows: (2.5em, 3.0em, 2.5em, 3.0em),
     stroke: 0.7pt + black,
     
     // Row 1: クラス / 内容 ヘッダー
@@ -61,5 +61,5 @@
     body-cell(author),
   ))
 
-  v(2cm)
+  v(3.5cm)
 }
