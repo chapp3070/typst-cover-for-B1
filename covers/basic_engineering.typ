@@ -26,14 +26,13 @@
   font: ("Yu Gothic", "Meiryo", "MS Gothic", "BIZ UDPGothic", "Noto Sans CJK JP", "IPAexGothic"),
 ) = {
   set text(font: font, lang: "ja")
-  
-  // タイトル部
-  align(center)[
-    #v(0.6cm)
+
+  // タイトル部（元PDFの基準座標 Y=64.21pt, 113.21pt）
+  place(top + center, dy: 64.21pt)[
     #text(size: 20pt, weight: "bold")[#department]
-    #v(0.8cm)
+  ]
+  place(top + center, dy: 113.21pt)[
     #text(size: 24pt, weight: "bold")[#report-title]
-    #v(1.4cm)
   ]
 
   // 表用の共通スタイル
@@ -67,84 +66,73 @@
   )
   let sub-list = submissions + default-subs.slice(calc.min(submissions.len(), 4))
 
-  // メイングリッド表
-  table(
-    columns: (1.1cm, 3.5cm, 3.5cm, 1fr),
-    rows: (
-      2.0em, // 1: 実験演習記録
-      2.0em, // 2: 年月日時 / 共同作業者
-      2.0em, // 3: 実験1
-      2.0em, // 4: 実験2
-      2.0em, // 5: 実験3
-      2.0em, // 6: 実験4
-      2.0em, // 7: レポート提出記録
-      2.0em, // 8: 提出年月日 / 期限年月日
-      2.0em, // 9: 初
-      2.0em, // 10: 再
-      2.0em, // 11: 再2
-      2.0em, // 12: 再3
-      2.0em, // 13: クラス / 班番号 / テーマ ヘッダー
-      2.8em, // 14: クラス / 班番号 / テーマ 内容
-      2.0em, // 15: 指導教員 / 学籍番号 / 氏名 ヘッダー
-      2.8em  // 16: 指導教員 / 学籍番号 / 氏名 内容
-    ),
-    align: (col, row) => center + horizon,
-    stroke: 0.7pt + black,
+  // メイングリッド表（元PDFの基準座標 X=56.03pt, Y=158.83pt）
+  place(top + left, dx: 56.03pt, dy: 158.83pt)[
+    #table(
+      columns: (28.19pt, 44.43pt, 70.83pt, 127.62pt, 211.07pt),
+      rows: (
+        34.22pt, 34.39pt, 34.20pt, 34.23pt, 34.20pt, 34.39pt,
+        34.23pt, 34.20pt, 34.20pt, 34.43pt, 34.19pt, 34.21pt,
+        34.20pt, 65.03pt, 46.19pt, 47.43pt
+      ),
+      stroke: 0.7pt + black,
+      align: center + horizon,
 
-    // Row 1-6 & Right Panel: 判定・指示
-    table.cell(colspan: 3, align: center + horizon)[#text(weight: "bold", size: 11pt)[実験演習記録]],
-    table.cell(rowspan: 12, align: center + top)[
-      #v(0.6em)
-      #text(weight: "bold", size: 11pt)[判定・指示]
-      #v(0.6em)
-      #align(left)[#text(size: 10pt)[#eval-instruction]]
-    ],
+      // Row 1: 実験演習記録 (cols 1-4) & 判定・指示 (col 5, rows 1-12)
+      table.cell(colspan: 4, align: center + horizon)[#text(weight: "bold", size: 11pt)[実験演習記録]],
+      table.cell(colspan: 1, rowspan: 12, align: center + top)[
+        #v(0.6em)
+        #text(weight: "bold", size: 11pt)[判定・指示]
+        #v(0.6em)
+        #align(left)[#text(size: 10pt)[#eval-instruction]]
+      ],
 
-    // Row 2: ヘッダー
-    header-cell([]),
-    header-cell([年月日時]),
-    header-cell([共同作業者]),
+      // Row 2: 年月日時 (cols 2-3) & 共同作業者 (col 4)
+      header-cell([]),
+      table.cell(colspan: 2, align: center + horizon)[#text(weight: "bold", size: 10.5pt)[年月日時]],
+      header-cell([共同作業者]),
 
-    // Rows 3-6: 実験記録
-    ..exp-list.slice(0, 4).enumerate().map(((idx, item)) => (
-      body-cell(item.at("num", default: "")),
-      body-cell(item.at("date", default: "")),
-      body-cell(item.at("collaborator", default: "")),
-    )).flatten(),
+      // Rows 3-6: 実験記録
+      ..exp-list.slice(0, 4).enumerate().map(((idx, item)) => (
+        body-cell(item.at("num", default: "")),
+        table.cell(colspan: 2, align: center + horizon)[#text(size: 10.5pt)[#item.at("date", default: "")]],
+        body-cell(item.at("collaborator", default: "")),
+      )).flatten(),
 
-    // Row 7: レポート提出記録 ヘッダー
-    table.cell(colspan: 3, align: center + horizon)[#text(weight: "bold", size: 11pt)[レポート提出記録]],
+      // Row 7: レポート提出記録
+      table.cell(colspan: 4, align: center + horizon)[#text(weight: "bold", size: 11pt)[レポート提出記録]],
 
-    // Row 8: ヘッダー
-    header-cell([]),
-    header-cell([提出年月日]),
-    header-cell([期限年月日]),
+      // Row 8: 提出年月日 (cols 2-3) & 期限年月日 (col 4)
+      header-cell([]),
+      table.cell(colspan: 2, align: center + horizon)[#text(weight: "bold", size: 10.5pt)[提出年月日]],
+      header-cell([期限年月日]),
 
-    // Rows 9-12: 提出記録
-    ..sub-list.slice(0, 4).map(item => (
-      body-cell(item.at("type", default: "")),
-      body-cell(item.at("date", default: "")),
-      body-cell(item.at("deadline", default: "")),
-    )).flatten(),
+      // Rows 9-12: 提出記録
+      ..sub-list.slice(0, 4).map(item => (
+        body-cell(item.at("type", default: "")),
+        table.cell(colspan: 2, align: center + horizon)[#text(size: 10.5pt)[#item.at("date", default: "")]],
+        body-cell(item.at("deadline", default: "")),
+      )).flatten(),
 
-    // Row 13: 下部ヘッダー 1 (クラスは Col1+Col2 に配置)
-    table.cell(colspan: 2, align: center + horizon)[#text(weight: "bold", size: 10.5pt)[クラス]],
-    header-cell([班番号]),
-    header-cell([テーマ]),
+      // Row 13: クラス (cols 1-2) / 班番号 (col 3) / テーマ (cols 4-5)
+      table.cell(colspan: 2, align: center + horizon)[#text(weight: "bold", size: 10.5pt)[クラス]],
+      header-cell([班番号]),
+      table.cell(colspan: 2, align: center + horizon)[#text(weight: "bold", size: 10.5pt)[テーマ]],
 
-    // Row 14: 下部内容 1
-    table.cell(colspan: 2, align: center + horizon)[#text(size: 11pt)[#class-name]],
-    body-cell(str(group-number)),
-    body-cell(theme),
+      // Row 14: クラス値 / 班番号値 / テーマ値
+      table.cell(colspan: 2, align: center + horizon)[#text(size: 11pt)[#class-name]],
+      body-cell(str(group-number)),
+      table.cell(colspan: 2, align: center + horizon)[#text(size: 11pt)[#theme]],
 
-    // Row 15: 下部ヘッダー 2 (指導教員は Col1+Col2 に配置)
-    table.cell(colspan: 2, align: center + horizon)[#text(weight: "bold", size: 10.5pt)[レポート指導教員]],
-    header-cell([学籍番号]),
-    header-cell([氏 名]),
+      // Row 15: レポート指導教員 (cols 1-3) / 学籍番号 (col 4) / 氏 名 (col 5)
+      table.cell(colspan: 3, align: center + horizon)[#text(weight: "bold", size: 10.5pt)[レポート指導教員]],
+      header-cell([学籍番号]),
+      header-cell([氏 名]),
 
-    // Row 16: 下部内容 2
-    table.cell(colspan: 2, align: center + horizon)[#text(size: 11pt)[#teacher]],
-    body-cell(student-id),
-    body-cell(author),
-  )
+      // Row 16: 指導教員値 / 学籍番号値 / 氏名値
+      table.cell(colspan: 3, align: center + horizon)[#text(size: 11pt)[#teacher]],
+      body-cell(student-id),
+      body-cell(author),
+    )
+  ]
 }

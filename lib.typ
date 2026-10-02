@@ -42,49 +42,44 @@
   
   body,
 ) = {
-  // ページ基本設定
-  set page(
-    paper: "a4",
-    margin: (x: 2cm, y: 2.5cm),
-  )
-
-  // 表紙の選択と表示
-  if cover-type == "basic-engineering" or cover-type == "basic" {
-    make-basic-engineering-cover(
-      department: department,
-      report-title: report-title,
-      experiments: experiments,
-      submissions: submissions,
-      class-name: class-name,
-      group-number: group-number,
-      theme: theme,
-      teacher: teacher,
-      student-id: student-id,
-      author: author,
-      eval-instruction: eval-instruction,
-      font: font,
-    )
-  } else if cover-type == "programming-practice" or cover-type == "programming" {
-    make-programming-practice-cover(
-      department: department,
-      subject: subject,
-      document-type: document-type,
-      class-name: class-name,
-      content: content,
-      teacher: teacher,
-      student-id: student-id,
-      author: author,
-      font: font,
-    )
-  } else {
-    panic("未知の cover-type です: " + cover-type + " ('basic-engineering' または 'programming-practice' を指定してください)")
-  }
-
-  // 本文ページへ移行
-  pagebreak()
+  // 表紙ページ（余白ゼロで絶対配置により元PDFの直線座標と100%一致させる）
+  page(paper: "a4", margin: 0pt)[
+    #if cover-type == "basic-engineering" or cover-type == "basic" [
+      #make-basic-engineering-cover(
+        department: department,
+        report-title: report-title,
+        experiments: experiments,
+        submissions: submissions,
+        class-name: class-name,
+        group-number: group-number,
+        theme: theme,
+        teacher: teacher,
+        student-id: student-id,
+        author: author,
+        eval-instruction: eval-instruction,
+        font: font,
+      )
+    ] else if cover-type == "programming-practice" or cover-type == "programming" [
+      #make-programming-practice-cover(
+        department: department,
+        subject: subject,
+        document-type: document-type,
+        class-name: class-name,
+        content: content,
+        teacher: teacher,
+        student-id: student-id,
+        author: author,
+        font: font,
+      )
+    ] else [
+      #panic("未知の cover-type です: " + cover-type + " ('basic-engineering' または 'programming-practice' を指定してください)")
+    ]
+  ]
 
   // 本文の設定
   set page(
+    paper: "a4",
+    margin: (x: 2cm, y: 2.5cm),
     numbering: "1",
   )
   counter(page).update(1)

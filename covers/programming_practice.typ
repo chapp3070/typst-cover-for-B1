@@ -14,17 +14,16 @@
 ) = {
   set text(font: font, lang: "ja")
 
-  // 上部タイトルセクション
-  align(center)[
-    #v(3.5cm)
+  // タイトル部（元PDFの基準座標 Y=239.47pt, 283.85pt, 332.50pt）
+  place(top + center, dy: 239.47pt)[
     #text(size: 20pt, weight: "bold")[#department]
-    #v(1.6cm)
+  ]
+  place(top + center, dy: 283.85pt)[
     #text(size: 24pt, weight: "bold")[#subject]
-    #v(1.4cm)
+  ]
+  place(top + center, dy: 332.50pt)[
     #text(size: 20pt, weight: "bold")[#document-type]
   ]
-
-  v(1fr)
 
   // 下部属性表
   let header-cell(body) = table.cell(
@@ -37,29 +36,31 @@
     [#text(size: 11pt)[#body]]
   )
 
-  align(center, table(
-    columns: (1fr, 1.5fr, 1.5fr),
-    rows: (2.5em, 3.0em, 2.5em, 3.0em),
-    stroke: 0.7pt + black,
-    
-    // Row 1: クラス / 内容 ヘッダー
-    header-cell([クラス]),
-    table.cell(colspan: 2, align: center + horizon)[#text(weight: "bold", size: 11pt)[内容]],
+  // メイン表（元PDFの基準座標 X=54.42pt, Y=569.72pt）
+  place(top + left, dx: 54.42pt, dy: 569.72pt)[
+    #table(
+      columns: (143.66pt, 127.62pt, 210.88pt),
+      rows: (35.61pt, 48.82pt, 47.60pt, 47.42pt),
+      stroke: 0.7pt + black,
+      align: center + horizon,
+      
+      // Row 1: クラス / 内容 ヘッダー
+      header-cell([クラス]),
+      table.cell(colspan: 2, align: center + horizon)[#text(weight: "bold", size: 11pt)[内容]],
 
-    // Row 2: クラス / 内容 値
-    body-cell(class-name),
-    table.cell(colspan: 2, align: center + horizon)[#text(size: 11pt)[#content]],
+      // Row 2: クラス / 内容 値
+      body-cell(class-name),
+      table.cell(colspan: 2, align: center + horizon)[#text(size: 11pt)[#content]],
 
-    // Row 3: 担当教員 / 学籍番号 / 氏名 ヘッダー
-    header-cell([担当教員]),
-    header-cell([学籍番号]),
-    header-cell([氏名]),
+      // Row 3: 担当教員 / 学籍番号 / 氏名 ヘッダー
+      header-cell([担当教員]),
+      header-cell([学籍番号]),
+      header-cell([氏名]),
 
-    // Row 4: 担当教員 / 学籍番号 / 氏名 値
-    body-cell(teacher),
-    body-cell(student-id),
-    body-cell(author),
-  ))
-
-  v(3.5cm)
+      // Row 4: 担当教員 / 学籍番号 / 氏名 値
+      body-cell(teacher),
+      body-cell(student-id),
+      body-cell(author),
+    )
+  ]
 }
