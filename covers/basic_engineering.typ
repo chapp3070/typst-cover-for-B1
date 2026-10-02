@@ -50,17 +50,22 @@
   )
 
   // 実験記録リストの補完（4行分を担保）
-  let exp-list = experiments
-  while exp-list.len() < 4 {
-    exp-list.push((num: str(exp-list.len() + 1), date: "", collaborator: ""))
-  }
+  let default-exps = (
+    (num: "1", date: "", collaborator: ""),
+    (num: "2", date: "", collaborator: ""),
+    (num: "3", date: "", collaborator: ""),
+    (num: "", date: "", collaborator: ""),
+  )
+  let exp-list = experiments + default-exps.slice(calc.min(experiments.len(), 4))
 
   // 提出記録リストの補完（4行分を担保）
-  let sub-list = submissions
-  while sub-list.len() < 4 {
-    let t = if sub-list.len() == 0 { "初" } else if sub-list.len() == 1 { "再" } else { "" }
-    sub-list.push((type: t, date: "", deadline: ""))
-  }
+  let default-subs = (
+    (type: "初", date: "", deadline: ""),
+    (type: "再", date: "", deadline: ""),
+    (type: "", date: "", deadline: ""),
+    (type: "", date: "", deadline: ""),
+  )
+  let sub-list = submissions + default-subs.slice(calc.min(submissions.len(), 4))
 
   // メイングリッド表
   table(
