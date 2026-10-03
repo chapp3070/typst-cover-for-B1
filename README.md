@@ -12,9 +12,9 @@
 
 | 表紙種別 | `cover-type` | 対象・用途 | 特徴・レイアウト |
 | :--- | :--- | :--- | :--- |
-| **プログラミング演習課題**<br>(毎回の演習課題 / pre-report) | `"programming-practice"`<br>(エイリアス: `"programming-exercise"`, `"programming-pre-report"`) | 毎回の授業で提出する演習課題・小レポート | シンプルな表紙形式。<br>クラス・演習回内容・担当教員・学籍番号・氏名を下部に記載。 |
-| **プログラミング定期レポート**<br>(本レポート / periodic report) | `"programming-report"`<br>(エイリアス: `"programming-main-report"`, `"programming-periodic-report"`) | 定期的に課される本格的なレポート課題 | 大枠グリッド付きの報告書形式。<br>課題実施記録、判定・指示欄、提出記録、科目名、テーマ番号・テーマ名、学年、学期、単位等を精密配置。 |
-| **工学基礎実験レポート** | `"basic-engineering"`<br>(エイリアス: `"basic"`) | 工学基礎実験のレポート | 実験演習記録、判定・指示、提出記録、班番号、実験テーマ等を記載。 |
+| **プログラミング演習課題**<br>(毎回の演習課題 / pre-report) | `"programming-practice"`<br>(エイリアス: `"programming-exercise"`, `"programming-pre-report"`) | 毎回の授業で提出する演習課題・小レポート | 
+| **プログラミング定期レポート**<br>(本レポート / periodic report) | `"programming-report"`<br>(エイリアス: `"programming-main-report"`, `"programming-periodic-report"`) | 定期的に課される本格的なレポート課題 | 
+| **工学基礎実験レポート** | `"basic-engineering"`<br>(エイリアス: `"basic"`) | 工学基礎実験のレポート | 
 
 ---
 
