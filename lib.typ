@@ -46,9 +46,9 @@
   author: "",
 
   // フォント設定
-  font: ("Yu Gothic", "Meiryo", "MS Gothic", "BIZ UDPGothic", "Noto Sans CJK JP", "IPAexGothic"),
-  font-gothic: ("MS Gothic", "Yu Gothic", "BIZ UDPGothic", "Meiryo", "Noto Sans CJK JP", "IPAexGothic"),
-  font-mincho: ("MS Mincho", "Yu Mincho", "BIZ UDPMincho", "Noto Serif CJK JP", "IPAexMincho"),
+  font: ("Yu Gothic", "Meiryo", "BIZ UDPGothic", "MS Gothic", "Noto Sans CJK JP", "IPAexGothic"),
+  font-gothic: ("Yu Gothic", "Meiryo", "BIZ UDPGothic", "MS Gothic"),
+  font-mincho: ("MS Mincho", "Yu Mincho", "BIZ UDPMincho"),
   
   body,
 ) = {

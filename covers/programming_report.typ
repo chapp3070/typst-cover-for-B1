@@ -6,7 +6,7 @@
   department: "知能情報システム工学科",
   report-title: "レポート",
   tasks: (
-    (num: "1", date: "2026/06/03", summary: ""),
+    (num: "1", date: "", summary: ""),
     (num: "2", date: "", summary: ""),
     (num: "3", date: "", summary: ""),
     (num: "4", date: "", summary: ""),
@@ -14,7 +14,7 @@
     (num: "", date: "", summary: ""),
   ),
   submissions: (
-    (type: "初", date: "2026/06/03", deadline: "2026/06/8"),
+    (type: "初", date: "", deadline: ""),
     (type: "再", date: "", deadline: ""),
     (type: "", date: "", deadline: ""),
     (type: "", date: "", deadline: ""),
@@ -26,17 +26,17 @@
   grade: "1",
   semester: "前期",
   credits: "2",
-  theme-number: "第１回レポート課題",
-  theme: "（1 約数の出力，2 素数の出力）",
+  theme-number: "",
+  theme: "",
   student-id: "",
   author: "",
-  font-gothic: ("MS Gothic", "Yu Gothic", "BIZ UDPGothic", "Meiryo", "Noto Sans CJK JP", "IPAexGothic"),
-  font-mincho: ("MS Mincho", "Yu Mincho", "BIZ UDPMincho", "Noto Serif CJK JP", "IPAexMincho"),
+  font-gothic: ("Yu Gothic", "Meiryo", "BIZ UDPGothic", "MS Gothic"),
+  font-mincho: ("MS Mincho", "Yu Mincho", "BIZ UDPMincho"),
 ) = {
-  // ゴシック体ヘッダー用
-  let gothic(body, weight: "regular", size: 12pt) = text(font: font-gothic, weight: weight, size: size)[#body]
-  // 明朝体データ用
-  let mincho(body, size: 10.6pt) = text(font: font-mincho, size: size)[#body]
+  // ゴシック体ヘッダー用（太字ウェイトを明確に適用）
+  let gothic(body, weight: "bold", size: 12pt) = text(font: font-gothic, weight: weight, size: size)[#body]
+  // 明朝体データ用（通常ウェイト）
+  let mincho(body, size: 10.6pt) = text(font: font-mincho, weight: "regular", size: size)[#body]
 
   // タイトル部（原本座標 Y=63.65pt）
   place(top + center, dy: 63.65pt)[
@@ -64,6 +64,44 @@
   )
   let sub-list = submissions + default-subs.slice(calc.min(submissions.len(), 5))
 
+  // ==========================================
+  // 外枠と主要仕切り線（絶対に欠損しないよう明示描画）
+  // ==========================================
+  
+  // 1. 最外枠矩形 (dx: 49.83pt, dy: 104.43pt, 幅: 503.95pt, 高さ: 633.35pt, 線幅: 1.4pt)
+  place(top + left, dx: 49.83pt, dy: 104.43pt)[
+    #rect(width: 503.95pt, height: 633.35pt, stroke: 1.4pt + black)
+  ]
+
+  // 2. 課題実施記録・提出記録と判定・指示の間の垂直仕切り線 (X: 355.50pt, Y: 104.43pt〜561.93pt, 長さ: 457.50pt)
+  place(top + left, dx: 355.50pt, dy: 104.43pt)[
+    #line(start: (0pt, 0pt), end: (0pt, 457.50pt), stroke: 1.4pt + black)
+  ]
+
+  // 3. 課題実施記録と提出記録の間の水平仕切り線 (X: 49.83pt〜355.50pt, Y: 348.68pt, 長さ: 305.67pt)
+  place(top + left, dx: 49.83pt, dy: 348.68pt)[
+    #line(start: (0pt, 0pt), end: (305.67pt, 0pt), stroke: 1.4pt + black)
+  ]
+
+  // 4. 上中段と下部情報1の間の水平仕切り線 (X: 49.83pt〜553.78pt, Y: 561.93pt, 長さ: 503.95pt)
+  place(top + left, dx: 49.83pt, dy: 561.93pt)[
+    #line(start: (0pt, 0pt), end: (503.95pt, 0pt), stroke: 1.4pt + black)
+  ]
+
+  // 5. 下部情報1と下部情報2の間の水平仕切り線 (X: 49.83pt〜553.78pt, Y: 638.55pt, 長さ: 503.95pt)
+  place(top + left, dx: 49.83pt, dy: 638.55pt)[
+    #line(start: (0pt, 0pt), end: (503.95pt, 0pt), stroke: 1.4pt + black)
+  ]
+
+  // 6. 下部情報2のテーマ情報と学籍情報の間の垂直仕切り線 (X: 310.10pt, Y: 638.55pt〜737.78pt, 長さ: 99.23pt)
+  place(top + left, dx: 310.10pt, dy: 638.55pt)[
+    #line(start: (0pt, 0pt), end: (0pt, 99.23pt), stroke: 0.6pt + black)
+  ]
+
+  // ==========================================
+  // 各ブロックのテーブルコンテンツ（内部罫線を描画）
+  // ==========================================
+
   // 1. 課題実施記録テーブル (dx: 49.83pt, dy: 104.43pt, 幅: 305.67pt, 高さ: 244.25pt)
   place(top + left, dx: 49.83pt, dy: 104.43pt)[
     #table(
@@ -71,14 +109,12 @@
       rows: (31.20pt, 30.62pt, 30.60pt, 30.40pt, 30.40pt, 30.62pt, 30.40pt, 30.01pt),
       align: center + horizon,
       stroke: (x, y) => {
-        let top-s = if y == 0 { 1.4pt + black } else if y == 1 or y == 2 { 0.6pt + black } else if y >= 3 and y <= 6 { (paint: black, thickness: 0.6pt, dash: (1.8pt, 0.6pt)) } else if y == 7 { (paint: black, thickness: 0.6pt, dash: (1.2pt, 0.4pt)) } else { none }
-        let bottom-s = if y == 7 { 1.4pt + black } else { none }
-        let left-s = if x == 0 { 1.4pt + black } else if y > 0 { 0.6pt + black } else { none }
-        let right-s = if x == 2 { 1.4pt + black } else { none }
-        (top: top-s, bottom: bottom-s, left: left-s, right: right-s)
+        let top-s = if y == 1 or y == 2 { 0.6pt + black } else if y >= 3 and y <= 6 { (paint: black, thickness: 0.6pt, dash: (1.8pt, 0.6pt)) } else if y == 7 { (paint: black, thickness: 0.6pt, dash: (1.2pt, 0.4pt)) } else { none }
+        let left-s = if (x == 1 or x == 2) and y >= 1 { 0.6pt + black } else { none }
+        (top: top-s, bottom: none, left: left-s, right: none)
       },
       table.cell(colspan: 3)[#gothic("課題実施記録", weight: "bold", size: 14pt)],
-      [], [#gothic("年月日")], [#gothic("概要")],
+      [], [#gothic("年月日", weight: "bold", size: 12pt)], [#gothic("概要", weight: "bold", size: 12pt)],
       ..task-list.slice(0, 6).map(it => (
         mincho(it.at("num", default: "")),
         mincho(it.at("date", default: "")),
@@ -94,14 +130,12 @@
       rows: (31.20pt, 426.30pt),
       align: (center + horizon, left + top),
       stroke: (x, y) => {
-        let top-s = if y == 0 { 1.4pt + black } else { 0.6pt + black }
-        let bottom-s = if y == 1 { 1.4pt + black } else { none }
-        let right-s = 1.4pt + black
-        (top: top-s, bottom: bottom-s, left: none, right: right-s)
+        let top-s = if y == 1 { 0.6pt + black } else { none }
+        (top: top-s, bottom: none, left: none, right: none)
       },
       [#gothic("判定・指示", weight: "bold", size: 12pt)],
       [
-        #set text(font: font-mincho, size: 10pt)
+        #set text(font: font-mincho, weight: "regular", size: 10pt)
         #pad(x: 8pt, y: 8pt)[#eval-instruction]
       ],
     )
@@ -115,13 +149,11 @@
       align: center + horizon,
       stroke: (x, y) => {
         let top-s = if y == 1 or y == 2 { 0.6pt + black } else if y >= 3 and y <= 5 { (paint: black, thickness: 0.6pt, dash: (1.8pt, 0.6pt)) } else { none }
-        let bottom-s = if y == 6 { 1.4pt + black } else { none }
-        let left-s = if x == 0 { 1.4pt + black } else if y > 0 { 0.6pt + black } else { none }
-        let right-s = if x == 2 { 1.4pt + black } else { none }
-        (top: top-s, bottom: bottom-s, left: left-s, right: right-s)
+        let left-s = if (x == 1 or x == 2) and y >= 1 { 0.6pt + black } else { none }
+        (top: top-s, bottom: none, left: left-s, right: none)
       },
       table.cell(colspan: 3)[#gothic("レポート提出記録", weight: "bold", size: 14pt)],
-      [], [#gothic("提出年月日")], [#gothic("期限年月日")],
+      [], [#gothic("提出年月日", weight: "bold", size: 12pt)], [#gothic("期限年月日", weight: "bold", size: 12pt)],
       ..sub-list.slice(0, 5).map(it => (
         mincho(it.at("type", default: "")),
         mincho(it.at("date", default: "")),
@@ -137,17 +169,15 @@
       rows: (31.20pt, 45.42pt),
       align: center + horizon,
       stroke: (x, y) => {
-        let top-s = if y == 0 { 1.4pt + black } else { 0.6pt + black }
-        let bottom-s = if y == 1 { 1.4pt + black } else { none }
-        let left-s = if x == 0 { 1.4pt + black } else { 0.6pt + black }
-        let right-s = if x == 4 { 1.4pt + black } else { none }
-        (top: top-s, bottom: bottom-s, left: left-s, right: right-s)
+        let top-s = if y == 1 { 0.6pt + black } else { none }
+        let left-s = if x >= 1 { 0.6pt + black } else { none }
+        (top: top-s, bottom: none, left: left-s, right: none)
       },
-      [#gothic("科目名")],
-      [#gothic("テーマ担当教員")],
-      [#gothic("学年")],
-      [#gothic("学期")],
-      [#gothic("単位")],
+      [#gothic("科目名", weight: "bold", size: 12pt)],
+      [#gothic("テーマ担当教員", weight: "bold", size: 12pt)],
+      [#gothic("学年", weight: "bold", size: 12pt)],
+      [#gothic("学期", weight: "bold", size: 12pt)],
+      [#gothic("単位", weight: "bold", size: 12pt)],
 
       [#mincho(subject, size: 12pt)],
       [#mincho(teacher, size: 14pt)],
@@ -165,35 +195,32 @@
       align: center + horizon,
       stroke: (x, y) => {
         let top-s = if y == 1 { 0.6pt + black } else { none }
-        let bottom-s = if y == 1 { 1.4pt + black } else { none }
-        let left-s = if x == 0 { 1.4pt + black } else { 0.6pt + black }
-        let right-s = if x == 1 { 1.4pt + black } else { none }
-        (top: top-s, bottom: bottom-s, left: left-s, right: right-s)
+        (top: top-s, bottom: none, left: none, right: none)
       },
       [
         #grid(
           columns: (1fr, 1fr),
           align: center + horizon,
-          [#gothic("テーマ番号")],
-          [#gothic("テーマ名")],
+          [#gothic("テーマ番号", weight: "bold", size: 12pt)],
+          [#gothic("テーマ名", weight: "bold", size: 12pt)],
         )
       ],
       [
         #grid(
           columns: (1fr, 1fr),
           align: center + horizon,
-          [#gothic("学籍番号")],
-          [#gothic("氏　名")],
+          [#gothic("学籍番号", weight: "bold", size: 12pt)],
+          [#gothic("氏　名", weight: "bold", size: 12pt)],
         )
       ],
 
       [
-        #set text(font: font-mincho, size: 12pt)
+        #set text(font: font-mincho, weight: "regular", size: 12pt)
         #if theme-number != "" [#theme-number \ ]
         #if theme != "" [#theme]
       ],
       [
-        #set text(font: font-mincho, size: 16pt)
+        #set text(font: font-mincho, weight: "regular", size: 16pt)
         #student-id #h(1.2em) #author
       ],
     )
