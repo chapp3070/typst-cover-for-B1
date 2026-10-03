@@ -10,7 +10,7 @@
 
 特に「プログラミングⅠ演習」などのプログラミング演習科目では、**毎授業で課される演習課題** と **定期的に課される本レポート** で提出フォーマットが異なります。本テンプレートでは以下のように使い分けます。
 
-| 表紙種別 | `cover-type` | 対象・用途 | 特徴・レイアウト |
+| 表紙種別 | `cover-type` | 対象・用途 |
 | :--- | :--- | :--- | :--- |
 | **プログラミング演習課題**<br>(毎回の演習課題 / pre-report) | `"programming-practice"`<br>(エイリアス: `"programming-exercise"`, `"programming-pre-report"`) | 毎回の授業で提出する演習課題・小レポート | 
 | **プログラミング定期レポート**<br>(本レポート / periodic report) | `"programming-report"`<br>(エイリアス: `"programming-main-report"`, `"programming-periodic-report"`) | 定期的に課される本格的なレポート課題 | 
