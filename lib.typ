@@ -3,13 +3,14 @@
 
 #import "covers/basic_engineering.typ": make-basic-engineering-cover
 #import "covers/programming_practice.typ": make-programming-practice-cover
+#import "covers/programming_report.typ": make-programming-report-cover
 
 #let tuat-report(
-  cover-type: "basic-engineering", // "basic-engineering" (工学基礎実験) | "programming-practice" (プログラミング演習)
+  cover-type: "basic-engineering", // "basic-engineering" | "programming-practice" | "programming-report"
   department: "知能情報システム工学科",
   
   // Basic Engineering 用
-  report-title: "工学基礎実験レポート",
+  report-title: "",
   experiments: (
     (num: "1", date: "", collaborator: ""),
     (num: "2", date: "", collaborator: ""),
@@ -26,10 +27,17 @@
   theme: "",
   eval-instruction: "",
 
-  // Programming Practice 用
+  // Programming Practice（毎回の演習課題: pre-report）用
   subject: "プログラミングⅠ演習",
   document-type: "演習課題",
   content: "",
+
+  // Programming Report（定期レポート: main report）用
+  tasks: none,
+  theme-number: "",
+  grade: "1",
+  semester: "前期",
+  credits: "2",
 
   // 共通
   class-name: "",
@@ -39,6 +47,8 @@
 
   // フォント設定
   font: ("Yu Gothic", "Meiryo", "MS Gothic", "BIZ UDPGothic", "Noto Sans CJK JP", "IPAexGothic"),
+  font-gothic: ("MS Gothic", "Yu Gothic", "BIZ UDPGothic", "Meiryo", "Noto Sans CJK JP", "IPAexGothic"),
+  font-mincho: ("MS Mincho", "Yu Mincho", "BIZ UDPMincho", "Noto Serif CJK JP", "IPAexMincho"),
   
   body,
 ) = {
@@ -47,7 +57,7 @@
     #if cover-type == "basic-engineering" or cover-type == "basic" [
       #make-basic-engineering-cover(
         department: department,
-        report-title: report-title,
+        report-title: if report-title != "" { report-title } else { "工学基礎実験レポート" },
         experiments: experiments,
         submissions: submissions,
         class-name: class-name,
@@ -59,7 +69,7 @@
         eval-instruction: eval-instruction,
         font: font,
       )
-    ] else if cover-type == "programming-practice" or cover-type == "programming" [
+    ] else if cover-type in ("programming-practice", "programming-exercise", "programming-pre-report", "programming") [
       #make-programming-practice-cover(
         department: department,
         subject: subject,
@@ -71,8 +81,37 @@
         author: author,
         font: font,
       )
+    ] else if cover-type in ("programming-report", "programming-main-report", "programming-periodic-report", "title") [
+      #let actual-tasks = if tasks != none { tasks } else {
+        (
+          (num: "1", date: "", summary: ""),
+          (num: "2", date: "", summary: ""),
+          (num: "3", date: "", summary: ""),
+          (num: "4", date: "", summary: ""),
+          (num: "", date: "", summary: ""),
+          (num: "", date: "", summary: ""),
+        )
+      }
+      #make-programming-report-cover(
+        department: department,
+        report-title: if report-title != "" { report-title } else { "レポート" },
+        tasks: actual-tasks,
+        submissions: submissions,
+        eval-instruction: eval-instruction,
+        subject: subject,
+        teacher: teacher,
+        grade: grade,
+        semester: semester,
+        credits: credits,
+        theme-number: theme-number,
+        theme: theme,
+        student-id: student-id,
+        author: author,
+        font-gothic: font-gothic,
+        font-mincho: font-mincho,
+      )
     ] else [
-      #panic("未知の cover-type です: " + cover-type + " ('basic-engineering' または 'programming-practice' を指定してください)")
+      #panic("未知の cover-type です: '" + cover-type + "'.\n利用可能な cover-type:\n- 'programming-practice' (毎授業の演習課題・事前課題)\n- 'programming-report' (定期レポート)\n- 'basic-engineering' (工学基礎実験レポート)")
     ]
   ]
 
