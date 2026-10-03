@@ -23,29 +23,29 @@
   student-id: "",
   author: "",
   eval-instruction: "",
-  font: ("Yu Gothic", "Meiryo", "MS Gothic", "BIZ UDPGothic", "Noto Sans CJK JP", "IPAexGothic"),
+  font: ("Yu Gothic", "Meiryo", "BIZ UDPGothic", "MS Gothic", "Noto Sans CJK JP", "IPAexGothic"),
 ) = {
   set text(font: font, lang: "ja")
 
   // タイトル部（元PDFの基準座標 Y=64.21pt, 113.21pt）
   place(top + center, dy: 64.21pt)[
-    #text(size: 20pt, weight: "bold")[#department]
+    #text(size: 22pt, weight: "bold")[#department]
   ]
   place(top + center, dy: 113.21pt)[
-    #text(size: 24pt, weight: "bold")[#report-title]
+    #text(size: 26pt, weight: "bold")[#report-title]
   ]
 
   // 表用の共通スタイル
-  let header-cell(content) = table.cell(
+  let header-cell(content, size: 12.5pt) = table.cell(
     align: center + horizon,
     fill: none,
-    [#text(weight: "bold", size: 10.5pt)[#content]]
+    [#text(weight: "bold", size: size)[#content]]
   )
 
-  let body-cell(content) = table.cell(
+  let body-cell(content, size: 12pt) = table.cell(
     align: center + horizon,
     fill: none,
-    [#text(size: 10.5pt)[#content]]
+    [#text(size: size)[#content]]
   )
 
   // 実験記録リストの補完（4行分を担保）
@@ -78,61 +78,60 @@
       stroke: 0.7pt + black,
       align: center + horizon,
 
-      // Row 1: 実験演習記録 (cols 1-4) & 判定・指示 (col 5, rows 1-12)
-      table.cell(colspan: 4, align: center + horizon)[#text(weight: "bold", size: 11pt)[実験演習記録]],
-      table.cell(colspan: 1, rowspan: 12, align: center + top)[
-        #v(0.6em)
-        #text(weight: "bold", size: 11pt)[判定・指示]
-        #v(0.6em)
-        #align(left)[#text(size: 10pt)[#eval-instruction]]
-      ],
+      // Row 1: 実験演習記録 (cols 1-4) & 判定・指示ヘッダー (col 5)
+      // 「判定・指示」の下に水平線を引くため、Row 1 では見出しのみを配置
+      table.cell(colspan: 4, align: center + horizon)[#text(weight: "bold", size: 14pt)[実験演習記録]],
+      table.cell(colspan: 1, align: center + horizon)[#text(weight: "bold", size: 13.5pt)[判定・指示]],
 
-      // Row 2: 年月日時 (cols 2-3) & 共同作業者 (col 4)
+      // Row 2: 年月日時 (cols 2-3) & 共同作業者 (col 4) & 判定・指示記入欄 (col 5, rows 2-12)
       header-cell([]),
-      table.cell(colspan: 2, align: center + horizon)[#text(weight: "bold", size: 10.5pt)[年月日時]],
+      table.cell(colspan: 2, align: center + horizon)[#text(weight: "bold", size: 12.5pt)[年月日時]],
       header-cell([共同作業者]),
+      table.cell(colspan: 1, rowspan: 11, align: left + top)[
+        #pad(x: 10pt, y: 10pt)[#text(size: 11pt)[#eval-instruction]]
+      ],
 
       // Rows 3-6: 実験記録
       ..exp-list.slice(0, 4).enumerate().map(((idx, item)) => (
         body-cell(item.at("num", default: "")),
-        table.cell(colspan: 2, align: center + horizon)[#text(size: 10.5pt)[#item.at("date", default: "")]],
+        table.cell(colspan: 2, align: center + horizon)[#text(size: 12pt)[#item.at("date", default: "")]],
         body-cell(item.at("collaborator", default: "")),
       )).flatten(),
 
       // Row 7: レポート提出記録
-      table.cell(colspan: 4, align: center + horizon)[#text(weight: "bold", size: 11pt)[レポート提出記録]],
+      table.cell(colspan: 4, align: center + horizon)[#text(weight: "bold", size: 14pt)[レポート提出記録]],
 
       // Row 8: 提出年月日 (cols 2-3) & 期限年月日 (col 4)
       header-cell([]),
-      table.cell(colspan: 2, align: center + horizon)[#text(weight: "bold", size: 10.5pt)[提出年月日]],
+      table.cell(colspan: 2, align: center + horizon)[#text(weight: "bold", size: 12.5pt)[提出年月日]],
       header-cell([期限年月日]),
 
       // Rows 9-12: 提出記録
       ..sub-list.slice(0, 4).map(item => (
         body-cell(item.at("type", default: "")),
-        table.cell(colspan: 2, align: center + horizon)[#text(size: 10.5pt)[#item.at("date", default: "")]],
+        table.cell(colspan: 2, align: center + horizon)[#text(size: 12pt)[#item.at("date", default: "")]],
         body-cell(item.at("deadline", default: "")),
       )).flatten(),
 
       // Row 13: クラス (cols 1-2) / 班番号 (col 3) / テーマ (cols 4-5)
-      table.cell(colspan: 2, align: center + horizon)[#text(weight: "bold", size: 10.5pt)[クラス]],
+      table.cell(colspan: 2, align: center + horizon)[#text(weight: "bold", size: 12.5pt)[クラス]],
       header-cell([班番号]),
-      table.cell(colspan: 2, align: center + horizon)[#text(weight: "bold", size: 10.5pt)[テーマ]],
+      table.cell(colspan: 2, align: center + horizon)[#text(weight: "bold", size: 12.5pt)[テーマ]],
 
       // Row 14: クラス値 / 班番号値 / テーマ値
-      table.cell(colspan: 2, align: center + horizon)[#text(size: 11pt)[#class-name]],
-      body-cell(str(group-number)),
-      table.cell(colspan: 2, align: center + horizon)[#text(size: 11pt)[#theme]],
+      table.cell(colspan: 2, align: center + horizon)[#text(size: 13.5pt)[#class-name]],
+      body-cell(str(group-number), size: 13.5pt),
+      table.cell(colspan: 2, align: center + horizon)[#text(size: 14pt)[#theme]],
 
       // Row 15: レポート指導教員 (cols 1-3) / 学籍番号 (col 4) / 氏 名 (col 5)
-      table.cell(colspan: 3, align: center + horizon)[#text(weight: "bold", size: 10.5pt)[レポート指導教員]],
+      table.cell(colspan: 3, align: center + horizon)[#text(weight: "bold", size: 12.5pt)[レポート指導教員]],
       header-cell([学籍番号]),
       header-cell([氏 名]),
 
       // Row 16: 指導教員値 / 学籍番号値 / 氏名値
-      table.cell(colspan: 3, align: center + horizon)[#text(size: 11pt)[#teacher]],
-      body-cell(student-id),
-      body-cell(author),
+      table.cell(colspan: 3, align: center + horizon)[#text(size: 14pt)[#teacher]],
+      body-cell(student-id, size: 14pt),
+      body-cell(author, size: 14pt),
     )
   ]
 }

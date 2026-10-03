@@ -34,13 +34,13 @@
   font-mincho: ("MS Mincho", "Yu Mincho", "BIZ UDPMincho"),
 ) = {
   // ゴシック体ヘッダー用（太字ウェイトを明確に適用）
-  let gothic(body, weight: "bold", size: 12pt) = text(font: font-gothic, weight: weight, size: size)[#body]
+  let gothic(body, weight: "bold", size: 13pt) = text(font: font-gothic, weight: weight, size: size)[#body]
   // 明朝体データ用（通常ウェイト）
-  let mincho(body, size: 10.6pt) = text(font: font-mincho, weight: "regular", size: size)[#body]
+  let mincho(body, size: 12pt) = text(font: font-mincho, weight: "regular", size: size)[#body]
 
   // タイトル部（原本座標 Y=63.65pt）
   place(top + center, dy: 63.65pt)[
-    #text(font: font-gothic, size: 20pt, weight: "bold")[#department #h(1.2em) #report-title]
+    #text(font: font-gothic, size: 22pt, weight: "bold")[#department #h(1.2em) #report-title]
   ]
 
   // タスクリストの6行補完
@@ -113,12 +113,12 @@
         let left-s = if (x == 1 or x == 2) and y >= 1 { 0.6pt + black } else { none }
         (top: top-s, bottom: none, left: left-s, right: none)
       },
-      table.cell(colspan: 3)[#gothic("課題実施記録", weight: "bold", size: 14pt)],
-      [], [#gothic("年月日", weight: "bold", size: 12pt)], [#gothic("概要", weight: "bold", size: 12pt)],
+      table.cell(colspan: 3)[#gothic("課題実施記録", weight: "bold", size: 15pt)],
+      [], [#gothic("年月日", weight: "bold", size: 13pt)], [#gothic("概要", weight: "bold", size: 13pt)],
       ..task-list.slice(0, 6).map(it => (
-        mincho(it.at("num", default: "")),
-        mincho(it.at("date", default: "")),
-        mincho(it.at("summary", default: "")),
+        mincho(it.at("num", default: ""), size: 12pt),
+        mincho(it.at("date", default: ""), size: 12pt),
+        mincho(it.at("summary", default: ""), size: 12pt),
       )).flatten(),
     )
   ]
@@ -133,10 +133,10 @@
         let top-s = if y == 1 { 0.6pt + black } else { none }
         (top: top-s, bottom: none, left: none, right: none)
       },
-      [#gothic("判定・指示", weight: "bold", size: 12pt)],
+      [#gothic("判定・指示", weight: "bold", size: 13.5pt)],
       [
-        #set text(font: font-mincho, weight: "regular", size: 10pt)
-        #pad(x: 8pt, y: 8pt)[#eval-instruction]
+        #set text(font: font-mincho, weight: "regular", size: 11pt)
+        #pad(x: 10pt, y: 10pt)[#eval-instruction]
       ],
     )
   ]
@@ -152,12 +152,12 @@
         let left-s = if (x == 1 or x == 2) and y >= 1 { 0.6pt + black } else { none }
         (top: top-s, bottom: none, left: left-s, right: none)
       },
-      table.cell(colspan: 3)[#gothic("レポート提出記録", weight: "bold", size: 14pt)],
-      [], [#gothic("提出年月日", weight: "bold", size: 12pt)], [#gothic("期限年月日", weight: "bold", size: 12pt)],
+      table.cell(colspan: 3)[#gothic("レポート提出記録", weight: "bold", size: 15pt)],
+      [], [#gothic("提出年月日", weight: "bold", size: 13pt)], [#gothic("期限年月日", weight: "bold", size: 13pt)],
       ..sub-list.slice(0, 5).map(it => (
-        mincho(it.at("type", default: "")),
-        mincho(it.at("date", default: "")),
-        mincho(it.at("deadline", default: "")),
+        mincho(it.at("type", default: ""), size: 12pt),
+        mincho(it.at("date", default: ""), size: 12pt),
+        mincho(it.at("deadline", default: ""), size: 12pt),
       )).flatten(),
     )
   ]
@@ -173,17 +173,17 @@
         let left-s = if x >= 1 { 0.6pt + black } else { none }
         (top: top-s, bottom: none, left: left-s, right: none)
       },
-      [#gothic("科目名", weight: "bold", size: 12pt)],
-      [#gothic("テーマ担当教員", weight: "bold", size: 12pt)],
-      [#gothic("学年", weight: "bold", size: 12pt)],
-      [#gothic("学期", weight: "bold", size: 12pt)],
-      [#gothic("単位", weight: "bold", size: 12pt)],
+      [#gothic("科目名", weight: "bold", size: 13pt)],
+      [#gothic("テーマ担当教員", weight: "bold", size: 13pt)],
+      [#gothic("学年", weight: "bold", size: 13pt)],
+      [#gothic("学期", weight: "bold", size: 13pt)],
+      [#gothic("単位", weight: "bold", size: 13pt)],
 
-      [#mincho(subject, size: 12pt)],
-      [#mincho(teacher, size: 14pt)],
-      [#mincho(str(grade), size: 16pt)],
-      [#mincho(semester, size: 16pt)],
-      [#mincho(str(credits), size: 16pt)],
+      [#mincho(subject, size: 13.5pt)],
+      [#mincho(teacher, size: 15pt)],
+      [#mincho(str(grade), size: 17pt)],
+      [#mincho(semester, size: 17pt)],
+      [#mincho(str(credits), size: 17pt)],
     )
   ]
 
@@ -201,26 +201,26 @@
         #grid(
           columns: (1fr, 1fr),
           align: center + horizon,
-          [#gothic("テーマ番号", weight: "bold", size: 12pt)],
-          [#gothic("テーマ名", weight: "bold", size: 12pt)],
+          [#gothic("テーマ番号", weight: "bold", size: 13pt)],
+          [#gothic("テーマ名", weight: "bold", size: 13pt)],
         )
       ],
       [
         #grid(
           columns: (1fr, 1fr),
           align: center + horizon,
-          [#gothic("学籍番号", weight: "bold", size: 12pt)],
-          [#gothic("氏　名", weight: "bold", size: 12pt)],
+          [#gothic("学籍番号", weight: "bold", size: 13pt)],
+          [#gothic("氏　名", weight: "bold", size: 13pt)],
         )
       ],
 
       [
-        #set text(font: font-mincho, weight: "regular", size: 12pt)
+        #set text(font: font-mincho, weight: "regular", size: 13.5pt)
         #if theme-number != "" [#theme-number \ ]
         #if theme != "" [#theme]
       ],
       [
-        #set text(font: font-mincho, weight: "regular", size: 16pt)
+        #set text(font: font-mincho, weight: "regular", size: 17.5pt)
         #student-id #h(1.2em) #author
       ],
     )
