@@ -55,32 +55,22 @@ iwr https://raw.githubusercontent.com/chapp3070/typst-cover-for-B1/main/scripts/
   cover-type: "programming-report",
   department: "知能情報システム工学科",
   report-title: "レポート",
-
-  // 課題実施記録（最大6行）
   tasks: (
     (num: "1", date: "2026/06/03", summary: ""),
     (num: "2", date: "", summary: ""),
     (num: "3", date: "", summary: ""),
     (num: "4", date: "", summary: ""),
   ),
-
-  // レポート提出記録（最大5行）
   submissions: (
     (type: "初", date: "2026/06/03", deadline: "2026/06/8"),
     (type: "再", date: "", deadline: ""),
   ),
-
-  // 判定・指示（空欄可）
   eval-instruction: "",
-
-  // 科目情報
   subject: "プログラミングⅠ演習",
   teacher: "演習 太郎",
   grade: "1",
   semester: "前期",
   credits: "2",
-
-  // テーマ・著者情報
   theme-number: "第１回レポート課題",
   theme: "（1 約数の出力，2 素数の出力）",
   student-id: "12345678",
@@ -105,7 +95,6 @@ iwr https://raw.githubusercontent.com/chapp3070/typst-cover-for-B1/main/scripts/
   department: "知能情報システム工学科",
   subject: "プログラミングⅠ演習",
   document-type: "演習課題",
-  
   class-name: "A-P2",
   content: "第10回　文字列と文字列操作",
   teacher: "演習 太郎",
@@ -128,21 +117,16 @@ iwr https://raw.githubusercontent.com/chapp3070/typst-cover-for-B1/main/scripts/
   cover-type: "basic-engineering",
   department: "知能情報システム工学科",
   report-title: "工学基礎実験レポート",
-  
-  // 実験演習記録（最大4つ）
   experiments: (
     (num: "1", date: "2026/06/19", collaborator: "農工 花子"),
     (num: "2", date: "", collaborator: "小金井 次郎"),
     (num: "3", date: "", collaborator: "府中 三郎"),
     (num: "", date: "", collaborator: "国分寺 四郎"),
   ),
-  
-  // レポート提出記録
   submissions: (
     (type: "初", date: "2026/06/25", deadline: "2026/06/26"),
     (type: "再", date: "2026/06/29", deadline: "2026/07/03"),
   ),
-
   class-name: "A-A2",
   group-number: 4,
   theme: "太陽電池実験",
