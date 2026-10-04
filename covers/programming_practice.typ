@@ -36,17 +36,31 @@
     [#text(size: 14pt)[#body]]
   )
 
-  // メイン表（元PDFの基準座標 X=54.42pt, Y=569.72pt）
+  // ==========================================
+  // 外枠と主要仕切り線（絶対に欠損しないよう明示描画）
+  // ==========================================
+
+  // 1. 最外枠矩形 (dx: 54.42pt, dy: 569.72pt, 幅: 482.16pt, 高さ: 179.45pt, 線幅: 1.8pt)
+  place(top + left, dx: 54.42pt, dy: 569.72pt)[
+    #rect(width: 482.16pt, height: 179.45pt, stroke: 1.8pt + black)
+  ]
+
+  // 2. 行2の下（内容と担当教員の間）の水平仕切り線 (dy: 569.72 + 35.61 + 48.82 = 654.15pt, 長さ: 482.16pt)
+  place(top + left, dx: 54.42pt, dy: 654.15pt)[
+    #line(start: (0pt, 0pt), end: (482.16pt, 0pt), stroke: 1.8pt + black)
+  ]
+
+  // ==========================================
+  // テーブル内部コンテンツ（内部罫線: 1.1pt を描画）
+  // ==========================================
   place(top + left, dx: 54.42pt, dy: 569.72pt)[
     #table(
       columns: (143.66pt, 127.62pt, 210.88pt),
       rows: (35.61pt, 48.82pt, 47.60pt, 47.42pt),
       stroke: (x, y) => {
-        let top-s = if y == 0 or y == 2 { 1.8pt + black } else { 1.1pt + black }
-        let bottom-s = if y == 3 { 1.8pt + black } else { none }
-        let left-s = if x == 0 { 1.8pt + black } else { 1.1pt + black }
-        let right-s = if x == 2 { 1.8pt + black } else { none }
-        (top: top-s, bottom: bottom-s, left: left-s, right: right-s)
+        let top-s = if y == 1 or y == 3 { 1.1pt + black } else { none }
+        let left-s = if x == 1 { 1.1pt + black } else if x == 2 and y >= 2 { 1.1pt + black } else { none }
+        (top: top-s, bottom: none, left: left-s, right: none)
       },
       align: center + horizon,
       
