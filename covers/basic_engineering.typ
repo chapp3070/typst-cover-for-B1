@@ -66,7 +66,48 @@
   )
   let sub-list = submissions + default-subs.slice(calc.min(submissions.len(), 4))
 
-  // メイングリッド表（元PDFの基準座標 X=56.03pt, Y=158.83pt）
+  // ==========================================
+  // 外枠と主要仕切り線（絶対に欠損しないよう明示描画）
+  // ==========================================
+
+  // 1. 最外枠矩形 (dx: 56.03pt, dy: 158.83pt, 幅: 482.14pt, 高さ: 603.94pt, 線幅: 1.8pt)
+  place(top + left, dx: 56.03pt, dy: 158.83pt)[
+    #rect(width: 482.14pt, height: 603.94pt, stroke: 1.8pt + black)
+  ]
+
+  // 2. 判定・指示の左側垂直仕切り線 (X: 327.10pt, Y: 158.83pt〜569.92pt, 長さ: 411.09pt, 線幅: 1.8pt)
+  place(top + left, dx: 327.10pt, dy: 158.83pt)[
+    #line(start: (0pt, 0pt), end: (0pt, 411.09pt), stroke: 1.8pt + black)
+  ]
+
+  // 3. 実験演習記録・判定指示の下部水平仕切り線 (Y: 193.05pt, 幅: 482.14pt, 線幅: 1.8pt)
+  place(top + left, dx: 56.03pt, dy: 193.05pt)[
+    #line(start: (0pt, 0pt), end: (482.14pt, 0pt), stroke: 1.8pt + black)
+  ]
+
+  // 4. 実験記録と提出記録の間の水平仕切り線 (Y: 364.46pt, 幅: 271.07pt, 線幅: 1.8pt)
+  place(top + left, dx: 56.03pt, dy: 364.46pt)[
+    #line(start: (0pt, 0pt), end: (271.07pt, 0pt), stroke: 1.8pt + black)
+  ]
+
+  // 5. 提出記録・判定指示の下部水平仕切り線 (Y: 569.92pt, 幅: 482.14pt, 線幅: 1.8pt)
+  place(top + left, dx: 56.03pt, dy: 569.92pt)[
+    #line(start: (0pt, 0pt), end: (482.14pt, 0pt), stroke: 1.8pt + black)
+  ]
+
+  // 6. テーマ値の下部水平仕切り線 (Y: 669.15pt, 幅: 482.14pt, 線幅: 1.8pt)
+  place(top + left, dx: 56.03pt, dy: 669.15pt)[
+    #line(start: (0pt, 0pt), end: (482.14pt, 0pt), stroke: 1.8pt + black)
+  ]
+
+  // 7. 指導教員見出しの下部水平仕切り線 (Y: 715.34pt, 幅: 482.14pt, 線幅: 1.1pt)
+  place(top + left, dx: 56.03pt, dy: 715.34pt)[
+    #line(start: (0pt, 0pt), end: (482.14pt, 0pt), stroke: 1.1pt + black)
+  ]
+
+  // ==========================================
+  // テーブル内部コンテンツ（内部罫線: 1.1pt を描画）
+  // ==========================================
   place(top + left, dx: 56.03pt, dy: 158.83pt)[
     #table(
       columns: (28.19pt, 44.43pt, 70.83pt, 127.62pt, 211.07pt),
@@ -76,12 +117,15 @@
         34.20pt, 65.03pt, 46.19pt, 47.43pt
       ),
       stroke: (x, y) => {
-        // 外枠・主要仕切り線: 1.8pt, 内部罫線: 1.1pt
-        let top-s = if y == 0 or y == 1 or y == 6 or y == 12 or y == 14 { 1.8pt + black } else { 1.1pt + black }
-        let bottom-s = if y == 15 { 1.8pt + black } else { none }
-        let left-s = if x == 0 { 1.8pt + black } else if x == 4 and y < 12 { 1.8pt + black } else { 1.1pt + black }
-        let right-s = if x == 4 { 1.8pt + black } else { none }
-        (top: top-s, bottom: bottom-s, left: left-s, right: right-s)
+        // 水平内線（1.1pt）
+        let top-s = if (y >= 2 and y <= 5) or (y >= 7 and y <= 11) or y == 13 { 1.1pt + black } else { none }
+        // 垂直内線（1.1pt）
+        let left-s = if x == 1 and ((y >= 1 and y <= 5) or (y >= 7 and y <= 11)) { 1.1pt + black }
+          else if x == 2 and y >= 12 and y <= 13 { 1.1pt + black }
+          else if x == 3 and ((y >= 1 and y <= 5) or (y >= 7 and y <= 15)) { 1.1pt + black }
+          else if x == 4 and y >= 14 and y <= 15 { 1.1pt + black }
+          else { none }
+        (top: top-s, bottom: none, left: left-s, right: none)
       },
       align: center + horizon,
 
