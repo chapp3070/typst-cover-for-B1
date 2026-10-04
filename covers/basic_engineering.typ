@@ -75,11 +75,17 @@
         34.23pt, 34.20pt, 34.20pt, 34.43pt, 34.19pt, 34.21pt,
         34.20pt, 65.03pt, 46.19pt, 47.43pt
       ),
-      stroke: 0.7pt + black,
+      stroke: (x, y) => {
+        // 外枠・主要仕切り線: 1.8pt, 内部罫線: 1.1pt
+        let top-s = if y == 0 or y == 1 or y == 6 or y == 12 or y == 14 { 1.8pt + black } else { 1.1pt + black }
+        let bottom-s = if y == 15 { 1.8pt + black } else { none }
+        let left-s = if x == 0 { 1.8pt + black } else if x == 4 and y < 12 { 1.8pt + black } else { 1.1pt + black }
+        let right-s = if x == 4 { 1.8pt + black } else { none }
+        (top: top-s, bottom: bottom-s, left: left-s, right: right-s)
+      },
       align: center + horizon,
 
       // Row 1: 実験演習記録 (cols 1-4) & 判定・指示ヘッダー (col 5)
-      // 「判定・指示」の下に水平線を引くため、Row 1 では見出しのみを配置
       table.cell(colspan: 4, align: center + horizon)[#text(weight: "bold", size: 14pt)[実験演習記録]],
       table.cell(colspan: 1, align: center + horizon)[#text(weight: "bold", size: 13.5pt)[判定・指示]],
 

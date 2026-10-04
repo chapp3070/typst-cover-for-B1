@@ -41,7 +41,13 @@
     #table(
       columns: (143.66pt, 127.62pt, 210.88pt),
       rows: (35.61pt, 48.82pt, 47.60pt, 47.42pt),
-      stroke: 0.7pt + black,
+      stroke: (x, y) => {
+        let top-s = if y == 0 or y == 2 { 1.8pt + black } else { 1.1pt + black }
+        let bottom-s = if y == 3 { 1.8pt + black } else { none }
+        let left-s = if x == 0 { 1.8pt + black } else { 1.1pt + black }
+        let right-s = if x == 2 { 1.8pt + black } else { none }
+        (top: top-s, bottom: bottom-s, left: left-s, right: right-s)
+      },
       align: center + horizon,
       
       // Row 1: クラス / 内容 ヘッダー

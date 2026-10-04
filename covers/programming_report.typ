@@ -65,41 +65,41 @@
   let sub-list = submissions + default-subs.slice(calc.min(submissions.len(), 5))
 
   // ==========================================
-  // 外枠と主要仕切り線（絶対に欠損しないよう明示描画）
+  // 外枠と主要仕切り線（1.8pt の太線で明示描画）
   // ==========================================
   
-  // 1. 最外枠矩形 (dx: 49.83pt, dy: 104.43pt, 幅: 503.95pt, 高さ: 633.35pt, 線幅: 1.4pt)
+  // 1. 最外枠矩形 (dx: 49.83pt, dy: 104.43pt, 幅: 503.95pt, 高さ: 633.35pt, 線幅: 1.8pt)
   place(top + left, dx: 49.83pt, dy: 104.43pt)[
-    #rect(width: 503.95pt, height: 633.35pt, stroke: 1.4pt + black)
+    #rect(width: 503.95pt, height: 633.35pt, stroke: 1.8pt + black)
   ]
 
   // 2. 課題実施記録・提出記録と判定・指示の間の垂直仕切り線 (X: 355.50pt, Y: 104.43pt〜561.93pt, 長さ: 457.50pt)
   place(top + left, dx: 355.50pt, dy: 104.43pt)[
-    #line(start: (0pt, 0pt), end: (0pt, 457.50pt), stroke: 1.4pt + black)
+    #line(start: (0pt, 0pt), end: (0pt, 457.50pt), stroke: 1.8pt + black)
   ]
 
   // 3. 課題実施記録と提出記録の間の水平仕切り線 (X: 49.83pt〜355.50pt, Y: 348.68pt, 長さ: 305.67pt)
   place(top + left, dx: 49.83pt, dy: 348.68pt)[
-    #line(start: (0pt, 0pt), end: (305.67pt, 0pt), stroke: 1.4pt + black)
+    #line(start: (0pt, 0pt), end: (305.67pt, 0pt), stroke: 1.8pt + black)
   ]
 
   // 4. 上中段と下部情報1の間の水平仕切り線 (X: 49.83pt〜553.78pt, Y: 561.93pt, 長さ: 503.95pt)
   place(top + left, dx: 49.83pt, dy: 561.93pt)[
-    #line(start: (0pt, 0pt), end: (503.95pt, 0pt), stroke: 1.4pt + black)
+    #line(start: (0pt, 0pt), end: (503.95pt, 0pt), stroke: 1.8pt + black)
   ]
 
   // 5. 下部情報1と下部情報2の間の水平仕切り線 (X: 49.83pt〜553.78pt, Y: 638.55pt, 長さ: 503.95pt)
   place(top + left, dx: 49.83pt, dy: 638.55pt)[
-    #line(start: (0pt, 0pt), end: (503.95pt, 0pt), stroke: 1.4pt + black)
+    #line(start: (0pt, 0pt), end: (503.95pt, 0pt), stroke: 1.8pt + black)
   ]
 
   // 6. 下部情報2のテーマ情報と学籍情報の間の垂直仕切り線 (X: 310.10pt, Y: 638.55pt〜737.78pt, 長さ: 99.23pt)
   place(top + left, dx: 310.10pt, dy: 638.55pt)[
-    #line(start: (0pt, 0pt), end: (0pt, 99.23pt), stroke: 0.6pt + black)
+    #line(start: (0pt, 0pt), end: (0pt, 99.23pt), stroke: 1.1pt + black)
   ]
 
   // ==========================================
-  // 各ブロックのテーブルコンテンツ（内部罫線を描画）
+  // 各ブロックのテーブルコンテンツ（内部罫線: 1.1pt を描画）
   // ==========================================
 
   // 1. 課題実施記録テーブル (dx: 49.83pt, dy: 104.43pt, 幅: 305.67pt, 高さ: 244.25pt)
@@ -109,8 +109,8 @@
       rows: (31.20pt, 30.62pt, 30.60pt, 30.40pt, 30.40pt, 30.62pt, 30.40pt, 30.01pt),
       align: center + horizon,
       stroke: (x, y) => {
-        let top-s = if y == 1 or y == 2 { 0.6pt + black } else if y >= 3 and y <= 6 { (paint: black, thickness: 0.6pt, dash: (1.8pt, 0.6pt)) } else if y == 7 { (paint: black, thickness: 0.6pt, dash: (1.2pt, 0.4pt)) } else { none }
-        let left-s = if (x == 1 or x == 2) and y >= 1 { 0.6pt + black } else { none }
+        let top-s = if y == 1 or y == 2 { 1.1pt + black } else if y >= 3 and y <= 6 { (paint: black, thickness: 1.1pt, dash: (2.2pt, 0.8pt)) } else if y == 7 { (paint: black, thickness: 1.1pt, dash: (1.5pt, 0.6pt)) } else { none }
+        let left-s = if (x == 1 or x == 2) and y >= 1 { 1.1pt + black } else { none }
         (top: top-s, bottom: none, left: left-s, right: none)
       },
       table.cell(colspan: 3)[#gothic("課題実施記録", weight: "bold", size: 15pt)],
@@ -130,7 +130,7 @@
       rows: (31.20pt, 426.30pt),
       align: (center + horizon, left + top),
       stroke: (x, y) => {
-        let top-s = if y == 1 { 0.6pt + black } else { none }
+        let top-s = if y == 1 { 1.1pt + black } else { none }
         (top: top-s, bottom: none, left: none, right: none)
       },
       [#gothic("判定・指示", weight: "bold", size: 13.5pt)],
@@ -148,8 +148,8 @@
       rows: (31.20pt, 30.42pt, 30.60pt, 30.60pt, 30.40pt, 30.22pt, 29.81pt),
       align: center + horizon,
       stroke: (x, y) => {
-        let top-s = if y == 1 or y == 2 { 0.6pt + black } else if y >= 3 and y <= 5 { (paint: black, thickness: 0.6pt, dash: (1.8pt, 0.6pt)) } else { none }
-        let left-s = if (x == 1 or x == 2) and y >= 1 { 0.6pt + black } else { none }
+        let top-s = if y == 1 or y == 2 { 1.1pt + black } else if y >= 3 and y <= 5 { (paint: black, thickness: 1.1pt, dash: (2.2pt, 0.8pt)) } else { none }
+        let left-s = if (x == 1 or x == 2) and y >= 1 { 1.1pt + black } else { none }
         (top: top-s, bottom: none, left: left-s, right: none)
       },
       table.cell(colspan: 3)[#gothic("レポート提出記録", weight: "bold", size: 15pt)],
@@ -169,8 +169,8 @@
       rows: (31.20pt, 45.42pt),
       align: center + horizon,
       stroke: (x, y) => {
-        let top-s = if y == 1 { 0.6pt + black } else { none }
-        let left-s = if x >= 1 { 0.6pt + black } else { none }
+        let top-s = if y == 1 { 1.1pt + black } else { none }
+        let left-s = if x >= 1 { 1.1pt + black } else { none }
         (top: top-s, bottom: none, left: left-s, right: none)
       },
       [#gothic("科目名", weight: "bold", size: 13pt)],
@@ -194,7 +194,7 @@
       rows: (31.20pt, 68.03pt),
       align: center + horizon,
       stroke: (x, y) => {
-        let top-s = if y == 1 { 0.6pt + black } else { none }
+        let top-s = if y == 1 { 1.1pt + black } else { none }
         (top: top-s, bottom: none, left: none, right: none)
       },
       [
