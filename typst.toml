@@ -2,6 +2,6 @@
 name = "typst-cover-for-B1"
 version = "0.1.0"
 entrypoint = "lib.typ"
-authors = ["TUAT Student"]
+authors = ["Ryuto Tomokane"]
 license = "MIT"
 description = "Typst cover templates for TUAT B1 laboratory and programming practice"
